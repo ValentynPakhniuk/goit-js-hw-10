@@ -8,21 +8,6 @@ const DEBOUNCE_DELAY = 300;
 const input = document.getElementById("search-box");
 const countryList = document.querySelector(".country-list");
 const countryInfo = document.querySelector(".country-info");
-  
-const template = {
-  single: updateInfo,
-  multiply: updateList
-}
-
-function updateList(cards) {
-  countryInfo.innerHTML = '';
-  countryList.innerHTML = cards;
-}
-
-function updateInfo(card) {
-  countryList.innerHTML = '';
-  countryInfo.innerHTML = card;
-}
 
 input.addEventListener('input', Debounce(onInput, DEBOUNCE_DELAY));
 
@@ -38,21 +23,15 @@ function onInput(e) {
   }
   fetchCountries(inputValue)
     .then((cards) => {
-      if (cards.length > 10) Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
-      if (cards.length > 1) {
-        return {
-          html: cards.reduce((acc, card) => countryItem(card) + acc, ''),
-          type: 'multiply',
-        };
+      if (cards.length > 10) { Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
+        }
+      else if (cards.length > 1 && cards.length < 10) {
+        return countryItem(cards);
       }
-      if (cards.length === 1) {
-        return {
-          html: countryCard(cards[0]),
-          type: 'single',
-        };
+      else if (cards.length === 1) {
+        return countryCard(cards);
       }
     })
-    .then(({ html, type }) => template[type](html))
     .catch(onError);
 }
 

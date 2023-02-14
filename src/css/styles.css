@@ -18,3 +18,18 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+
+.hero {
+display: flex;
+gap: 10px;
+align-items: center;
+}
+
+ul {
+  padding-left: 0px;
+}
+
+h1 {
+  margin: 0;
+}
+

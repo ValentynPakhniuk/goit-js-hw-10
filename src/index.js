@@ -30,14 +30,15 @@ function onInput(e) {
   e.preventDefault();
 
   const inputValue = e.target.value.trim();
-  if (input.value.length === 0) {
+  if (inputValue.length === 0) {
     countryInfo.innerHTML = '';
     countryList.innerHTML = '';
+    console.clear();
     return;
   }
   fetchCountries(inputValue)
     .then((cards) => {
-      if (cards.length > 10) throw new Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
+      if (cards.length > 10) Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
       if (cards.length > 1) {
         return {
           html: cards.reduce((acc, card) => countryItem(card) + acc, ''),
@@ -55,7 +56,6 @@ function onInput(e) {
     .catch(onError);
 }
 
-function onError(err) {
-  console.log(err);
+function onError() {
   Notiflix.Notify.failure("Oops, there is no country with that name");
 }

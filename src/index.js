@@ -24,7 +24,8 @@ function onInput(e) {
   fetchCountries(inputValue)
     .then((cards) => {
       if (cards.length > 10) { Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
-        }
+        countryList.innerHTML = '';
+      }
       else if (cards.length > 1 && cards.length < 10) {
         return countryItem(cards);
       }
